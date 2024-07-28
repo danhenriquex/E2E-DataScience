@@ -1,33 +1,31 @@
-version: 3.8
-
 services:
   app:
-    user: "${UID}"
-    hostname: "${HOST}"
+    user: "${UID:-2000}"
+    hostname: "${HOST:-project-environment}"
     build:
       context: .
-      docker: ./docker/Dockerfile
+      dockerfile: ./docker/Dockerfile
       args:
-        USER_NAME: ${USER_NAME}
-        USER_ID: ${UID}
+        USER_NAME: ${USER_NAME:-danilohssantana}
+        USER_ID: ${UID:-2000}
     image: project-environment
     container_name: project-environment
     # env_file:
     #   ~.envs/.app
 
-  volumes:
-    - ./:/app
-    - ~/.config/gcloud:${HOME}/.config/gcloud
-  ports:
-    - 8080:8080
+    volumes:
+      - ./:/app
+      - ~/.config/gcloud:${HOME}/.config/gcloud
+    ports:
+      - 8080:8080
 
-  deploy:
-    resources:
-      reservations:
-        devices:
-          - driver: nvidia
-            count: all
-            capabilities: [gpu]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
-  ipc: host
-  init: true
+    ipc: host
+    init: true
