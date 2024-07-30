@@ -1,6 +1,6 @@
 services:
   app:
-    user: "${UID:-2000}"
+    user: root
     hostname: "${HOST:-project-environment}"
     build:
       context: .
