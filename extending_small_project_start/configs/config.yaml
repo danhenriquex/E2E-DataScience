@@ -1,5 +1,0 @@
-defaults:
-  - config_schema
-  - task: mnist_classification
-  - data_module: mnist
-  - trainer: gpu
